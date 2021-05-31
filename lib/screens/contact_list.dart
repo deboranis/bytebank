@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newbytebank/database/app_database.dart';
+import 'package:newbytebank/database/dao/contact_dao.dart';
 import 'package:newbytebank/models/contact.dart';
 import 'package:newbytebank/screens/contact_form.dart';
 
@@ -10,15 +10,17 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text('Transfer'),
       ),
       body: FutureBuilder<List<Contact>>( //basicamente um stateful widget
         initialData: List(),
-        future: findAll(), //vai buscar todas as ocorrencias de contatos na lista da database, mas sempre dando um delay porque quando inicia a aplicação vai retornar null
+        future: _dao.findAll(), //vai buscar todas as ocorrencias de contatos na lista da database, mas sempre dando um delay porque quando inicia a aplicação vai retornar null
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
